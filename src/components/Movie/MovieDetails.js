@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { StarRating } from '../../StarRating';
 import { Loader } from '../Loader';
 import { apiKey } from '../../config';
+import { useKey } from '../../hooks/useKey';
 
 export function MovieDetails({
   selectedId,
@@ -14,6 +15,7 @@ export function MovieDetails({
   const [userRating, setUserRating] = useState('');
 
   const countRef = useRef(0);
+  useKey('Escape', onCloseMovie);
 
   const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
   const watchedUserRating = watched.find(
@@ -82,23 +84,6 @@ export function MovieDetails({
       };
     },
     [title]
-  );
-
-  useEffect(
-    function () {
-      function callback(e) {
-        if (e.code === 'Escape') {
-          onCloseMovie();
-        }
-      }
-
-      document.addEventListener('keydown', callback);
-
-      return function () {
-        document.removeEventListener('keydown', callback);
-      };
-    },
-    [onCloseMovie]
   );
 
   return (

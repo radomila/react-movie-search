@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Loader } from './components/Loader';
 import { ErrorMessage } from './components/ErrorMessage';
 import { Navbar } from './components/Navbar';
@@ -17,9 +17,9 @@ import { useLocalStorageState } from './hooks/useLocalStorageState';
 export default function App() {
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState(null);
-  const [watched, setWatched] = useLocalStorageState([], 'watched');
-
   const { movies, isLoading, error } = useMovies(query);
+
+  const [watched, setWatched] = useLocalStorageState([], 'watched');
 
   function handleSelectMovie(id) {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
